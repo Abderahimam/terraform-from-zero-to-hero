@@ -15,4 +15,8 @@ provider "azurerm" {
 resource "azurerm_resource_group" "financegrp" {
   name  = "financegrp"
   location = "polandcentral"
+
+  tags = {
+    cost_center = "finance resource"
+  }
 }
