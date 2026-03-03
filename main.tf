@@ -12,11 +12,14 @@ provider "azurerm" {
 
 }
    
-resource "azurerm_resource_group" "financegrp" {
-  name  = "financegrp"
-  location = "polandcentral"
+resource "azurerm_resource_group" "redbull_rg" {
+  name  = "${local.prefix}-rg"
+  location = local.region
 
-  tags = {
-    cost_center = "finance resource"
-  }
+  tags = local.tags
+}
+resource "azurerm_resource_group" "dev_rg" {
+  name = "${local.prefix}-dev-rg"
+  location = local.region
+  tags = local.tags
 }
