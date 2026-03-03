@@ -13,13 +13,13 @@ provider "azurerm" {
 }
    
 resource "azurerm_resource_group" "redbull_rg" {
-  name  = "${local.prefix}-rg"
-  location = local.region
+  name  = "${var.prefix}-rg"
+  location = var.region
 
-  tags = local.tags
+  tags = var.tags
 }
 resource "azurerm_resource_group" "dev_rg" {
-  name = "${local.prefix}-dev-rg"
-  location = local.region
-  tags = local.tags
+  name = "${var.prefix}-dev-rg"
+  location = var.region
+  tags = var.tags
 }
