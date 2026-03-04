@@ -1,15 +1,25 @@
-variable "prefix" {}
+
+variable "prefix" {
+    type = string
+    description = "A prefix for all resources"
+    default = "redbull"
+}
+
 variable "region" {
     type = string 
-    default = "Poland Central"
-    description = "The region where the resources will be created"
+    default = "North Europe"
+    description = "The azure region to deploy the resources"
     validation {
-        condition = contains(["UK South", "UK West", "North Europe", "West Europe", "Poland Central"], var.region)
-        error_message = "The region must be one of the following: UK South, UK West, North Europe, West Europe, Poland Central"
+      condition = contains (["UK South", "UK West", "North Europe","West Europe","East US","West US"], var.region)
+      error_message = "The region must be one of the following: UK South, UK West, North Europe, West Europe, East US, West US"
     }
 }
 
 variable "tags" {
-    type = map(any)
+    type = map(string)
     description = "A map of tags"
+}
+
+variable "resource_groups" {
+  type = map(string)
 }

@@ -12,14 +12,10 @@ provider "azurerm" {
 
 }
    
-resource "azurerm_resource_group" "redbull_rg" {
-  name  = "${var.prefix}-rg"
+resource "azurerm_resource_group" "demo" {
+  for_each = var.resource_groups
+  name  = "${var.prefix}_${each.value}"
   location = var.region
 
-  tags = var.tags
-}
-resource "azurerm_resource_group" "dev_rg" {
-  name = "${var.prefix}-dev-rg"
-  location = var.region
   tags = var.tags
 }
