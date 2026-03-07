@@ -12,26 +12,27 @@ provider "azurerm" {
 
 }
 
-resource "azurerm_resource_group" "demo" {
-  for_each = var.resource_groups
-  name     = "${var.prefix}_${each.value}"
-  location = var.region
+module "demo" {
+  source = "./modules/demo"
 
+  prefix = var.prefix
+  region = var.region
+  resource_groups = var.resource_groups
+  virtual_networks = var.virtual_networks
   tags = var.tags
 }
 
-
-resource "azurerm_virtual_network" "demo" {
-  for_each = var.virtual_networks
-  name = each.value.name
-  address_space = each.value.address_space
-  location = var.region
-  resource_group_name = azurerm_resource_group.demo[each.value.resource_group_key].name
+moved {
+  from = azurerm_resource_group.demo
+  to  = module.demo.azurerm_resource_group.demo
 }
-resource "azurerm_subnet" "demo" {
-  for_each = local.subnets
-  name = each.value.name
-  resource_group_name = each.value.resource_group_name
-  virtual_network_name = each.value.virtual_network_name
-  address_prefixes = [each.value.address_prefix]
+moved {
+  from =azurerm_virtual_network.demo
+  to = module.demo.azurerm_virtual_network.demo
+}
+
+moved {
+  from = azurerm_subnet.demo
+  to = module.demo.azurerm_subnet.demo
+
 }
